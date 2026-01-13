@@ -1,62 +1,56 @@
-# 🎓 MyCampus — Campus Companion App
+# 🎓 MyCampus — Your Everyday Campus Companion
 
-**All-in-one student app** to handle campus navigation, schedules, tasks, and support — built for **GDG on Campus TechSprint** using **Google Maps + Flutter**. Fully offline-first and smooth af.
+MyCampus is a simple, fast, and offline-friendly mobile app made to help students navigate campus life without stress.  
+From finding places on campus to managing tasks and events — everything lives in one app.
 
---- 
+Built for **GDG on Campus TechSprint** using **Flutter** and **Google Maps** 🚀
+
+---
+
+## ✨ Why MyCampus?
+
+Campus apps are often slow, cluttered, or useless without the internet.  
+**MyCampus is different** — it’s lightweight, smooth, and works even when you’re offline.
+
+Designed *by a student, for students.*
+
+---
 
 ## 🚀 Features
 
-### Core
-- 🗺️ **Campus Map** — 23+ Chandigarh University spots + Google Maps navigation
-- 📅 **Calendar** — Save + view events locally
-- ✅ **Planner** — Priority task management (High/Medium/Low)
-- 🆘 **Help Desk** — College support links
-- 🌙 **Themes** — Dark/Light + Material 3 UI
+### 🧠 Core Features
+- 🗺️ **Campus Map**  
+  Navigate **23+ key locations** inside Chandigarh University with Google Maps integration.
+  
+- 📅 **Calendar**  
+  Save and view events locally — no login, no internet needed.
 
-### Tech W’s
-- Offline storage via **SharedPreferences**
-- Optimized release APK (~25MB)
-- Responsive + modern UI (Material 3)
-- Uses **Google Maps Flutter Plugin**
+- ✅ **Task Planner**  
+  Organize tasks with **High / Medium / Low priority**.
 
----
+- 🆘 **Help Desk**  
+  Quick access to important college support links.
 
-## ⚡ Quick Start
-
-### 1. Clone & Run
-
-git clone https://github.com/YOUR_USERNAME/mycampus-app.git cd mycampus-app flutter pub get flutter run
-
-### 2. Build APK
-
-flutter clean flutter pub get flutter build apk --release
-
-📌 Output APK: `build/app/outputs/flutter-apk/app-release.apk`
-
-### 3. Requirements
-- Flutter SDK 3.10+
-- Android SDK (API 21+)
-- Google Maps API Key *(optional if you're testing nav)*
+- 🌙 **Themes**  
+  Clean **Light & Dark mode** with Material 3 UI.
 
 ---
 
+## 🛠️ Tech Highlights
 
-## 🔮 Roadmap
-
-Phase 2: ✨ AI Scheduling (Gemini API) 🌍 Multi-college maps ☁ Firebase Sync
-
-Phase 3: 📊 Analytics 🔔 Notifications 👥 Social + Study Groups
-
----
-
-## 🤝 Contribute
-1. Fork it
-2. Make a branch (`git checkout -b feature/fire`)
-3. Commit (`git commit -m "Add fire feature"`)
-4. Push (`git push origin feature/fire`)
-5. PR it
+- 📦 **Offline-first** using SharedPreferences  
+- ⚡ **Optimized APK size (~25MB)**  
+- 🎨 Modern **Material 3** design  
+- 📱 Fully responsive UI  
+- 🗺️ Google Maps Flutter Plugin
 
 ---
 
-⭐ **Star if this helped you survive campus chaos**  
-🚀 **Built with ❤️ for student innovation**
+## Quick Start
+
+###  Clone & Run
+```bash
+git clone https://github.com/YOUR_USERNAME/mycampus-app.git
+cd mycampus-app
+flutter pub get
+flutter run
