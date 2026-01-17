@@ -50,7 +50,7 @@ Designed *by a student, for students.*
 
 ###  Clone & Run
 ```bash
-git clone https://github.com/YOUR_USERNAME/mycampus-app.git
+git clone https://github.com/antra-09120/mycampus_v1.git
 cd mycampus-app
 flutter pub get
 flutter run
