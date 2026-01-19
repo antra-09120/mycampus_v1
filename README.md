@@ -1,56 +1,84 @@
-# 🎓 MyCampus — Your Everyday Campus Companion
+# 🎓 MyCampus – Campus Companion App
 
-MyCampus is a simple, fast, and offline-friendly mobile app made to help students navigate campus life without stress.  
-From finding places on campus to managing tasks and events — everything lives in one app.
+MyCampus is a Flutter-based mobile application designed to simplify daily campus life for students.  
+It brings essential campus utilities like **navigation, planning, scheduling, and login persistence** into one lightweight, easy-to-use app.
 
-Built for **GDG on Campus TechSprint** using **Flutter** and **Google Maps** 🚀
-
----
-
-## ✨ Why MyCampus?
-
-Campus apps are often slow, cluttered, or useless without the internet.  
-**MyCampus is different** — it’s lightweight, smooth, and works even when you’re offline.
-
-Designed *by a student, for students.*
+This project was developed and upgraded during the hackathon period and is intended as a **functional MVP** for real campus usage.
 
 ---
 
 ## 🚀 Features
 
-### 🧠 Core Features
-- 🗺️ **Campus Map**  
-  Navigate **23+ key locations** inside Chandigarh University with Google Maps integration.
-  
-- 📅 **Calendar**  
-  Save and view events locally — no login, no internet needed.
+### 🔐 Login & Student Profile
+- Simple student login using **Name, College, and UID**
+- Login details stored locally using SharedPreferences
+- **Auto-login** on next app launch (offline-first)
+- Personalized home screen after login
 
-- ✅ **Task Planner**  
-  Organize tasks with **High / Medium / Low priority**.
+### 🗺️ Campus Map & Navigation
+- Interactive campus map with important locations
+- Blocks, hostels, and facilities marked with coordinates
+- Navigation via Google Maps integration
 
-- 🆘 **Help Desk**  
-  Quick access to important college support links.
+### 📅 Calendar
+- Add and view academic or personal events
+- Date-based event tracking
+- Clean and minimal UI
 
-- 🌙 **Themes**  
-  Clean **Light & Dark mode** with Material 3 UI.
+### ✅ Planner
+- Task management with priorities
+- Mark tasks as completed
+- Helps manage assignments and deadlines
 
----
-
-## 🛠️ Tech Highlights
-
-- 📦 **Offline-first** using SharedPreferences  
-- ⚡ **Optimized APK size (~25MB)**  
-- 🎨 Modern **Material 3** design  
-- 📱 Fully responsive UI  
-- 🗺️ Google Maps Flutter Plugin
+### 🆘 Help Desk
+- Quick access to campus help and support information
 
 ---
 
-## Quick Start
+## 🖼️ Screenshots
+> Screenshots are available in the project documentation / PPT submission.
 
-###  Clone & Run
+---
+
+## 🛠️ Tech Stack
+
+### Core Technologies
+- **Flutter** – Cross-platform app development
+- **Dart** – Application logic
+
+### Google Technologies
+- **Google Maps SDK** – Campus map & navigation
+- **Google Location Services** – User location & routing
+- **Material Design (Flutter)** – UI components & theming
+
+### Storage
+- **SharedPreferences** – Local storage for login persistence and offline usage
+
+---
+
+## 📦 APK (MVP Build)
+
+A working APK has been generated from the latest codebase and tested on a real Android device.
+
+**APK highlights:**
+- Reflects latest login persistence logic
+- Offline-first functionality
+- Built after project updates (post 1 Dec 2025)
+
+> APK download link is provided in the hackathon submission / PPT.
+
+---
+
+## ⚙️ How to Run Locally
+
+### Prerequisites
+- Flutter SDK (stable)
+- Android Studio or VS Code
+- Android device or emulator
+
+### Steps
 ```bash
 git clone https://github.com/antra-09120/mycampus_v1.git
-cd mycampus-app
+cd mycampus_v1
 flutter pub get
 flutter run
