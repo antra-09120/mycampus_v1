@@ -36,7 +36,7 @@ class _CampusMapScreenState extends State<CampusMapScreen> {
     "D2 Block – Classes": LatLng(30.7677, 76.5773),
     "D3 Block – Classes": LatLng(30.7675, 76.5776),
     "D4 Block – Classes": LatLng(30.7673, 76.5779),
-    "D5 Block – Classes": LatLng(30.7671, 76.5782),
+    "D5 Block – Classes": LatLng(30.771033526773625, 76.56965298064976),
     "D6 Block – Central Library": LatLng(30.7669, 76.5785),
 
     // 🏠 Hostels
@@ -45,9 +45,9 @@ class _CampusMapScreenState extends State<CampusMapScreen> {
     "Tagore Hostel - Girls Hostel": LatLng(30.7658047596623, 76.57578871752388),
 
     // 🚪 Gates
-    "Gate 1 – Main Gate (Bus & Private Vehicles)": LatLng(30.7705, 76.5728),
-    "Gate 2 – Student Entry Gate": LatLng(30.7710, 76.5736),
-    "Gate 3 – Near D Block": LatLng(30.7662, 76.5789),
+    "Gate 1 – Main Gate (Bus & Private Vehicles)": LatLng(30.7719047322592, 76.57943177846573),
+    "Gate 2 – Student Entry Gate": LatLng(30.77254319789523, 76.57645943358823),
+    "Gate 3 – Near D Block": LatLng(30.77383785131635, 76.57195447332838),
 
     // Extras
     "Fountain Park": LatLng(30.769436754143157, 76.57679970466121),
