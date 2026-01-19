@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'screens/home_screen.dart';
+import 'utils/user_prefs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  // ✅ CLEAR old data on first run (COMMENT THIS OUT LATER if you want persistence)
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.remove('student_data'); // Clear old login
-  
   runApp(MyCampusApp());
 }
 
@@ -30,6 +27,7 @@ class _MyCampusAppState extends State<MyCampusApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MyCampus',
+      debugShowCheckedModeBanner: false,
       themeMode: _themeMode,
       theme: ThemeData(
         useMaterial3: true,
@@ -55,7 +53,7 @@ class _MyCampusAppState extends State<MyCampusApp> {
             );
           }
 
-          if (snapshot.hasError || !snapshot.hasData || snapshot.data!.isEmpty) {
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return LoginScreen(onLoginSuccess: _onThemeChanged);
           }
 
@@ -72,7 +70,6 @@ class _MyCampusAppState extends State<MyCampusApp> {
           );
         },
       ),
-      debugShowCheckedModeBanner: false,
     );
   }
 
@@ -94,6 +91,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _uidController = TextEditingController();
+
   String? _selectedCollege;
   bool _isLoading = false;
 
@@ -110,52 +108,47 @@ class _LoginScreenState extends State<LoginScreen> {
         _selectedCollege == null ||
         _uidController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill all fields'),
-          backgroundColor: Colors.red,
-        ),
+        const SnackBar(content: Text('Please fill all details')),
       );
       return;
     }
 
-    setState(() {
-      _isLoading = true;
-    });
+    setState(() => _isLoading = true);
 
     try {
+      // Save locally
       final prefs = await SharedPreferences.getInstance();
       final studentData =
-          '${_nameController.text}|${_selectedCollege}|${_uidController.text}';
+          '${_nameController.text}|${_selectedCollege!}|${_uidController.text}';
       await prefs.setString('student_data', studentData);
 
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeScreen(
-              studentName: _nameController.text,
-              college: _selectedCollege!,
-              uid: _uidController.text,
-              onThemeChanged: widget.onLoginSuccess,
-            ),
+      // Navigate to HomeScreen
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => HomeScreen(
+            studentName: _nameController.text,
+            college: _selectedCollege!,
+            uid: _uidController.text,
+            onThemeChanged: widget.onLoginSuccess,
           ),
-        );
-      }
+        ),
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error: $e'),
+          content: Text('Login failed: $e'),
           backgroundColor: Colors.red,
         ),
       );
     } finally {
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() => _isLoading = false);
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -165,8 +158,8 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
               colors: [Color(0xFF1F65B0), Color(0xFF2B7FC7)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -175,11 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.school_rounded,
-                size: 100,
-                color: Colors.white,
-              ),
+              const Icon(Icons.school_rounded, size: 100, color: Colors.white),
               const SizedBox(height: 24),
               const Text(
                 'MyCampus',
@@ -192,10 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 8),
               const Text(
                 'Campus Companion',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 18, color: Colors.white70),
               ),
               const SizedBox(height: 60),
               Container(
@@ -204,103 +190,43 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: BoxDecoration(
                   color: isDark ? const Color(0xFF1A1A2E) : Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 16,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Login',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    // Student Name
                     TextField(
                       controller: _nameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Full Name',
-                        hintText: 'Enter your name',
-                        prefixIcon: const Icon(Icons.person_rounded),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        prefixIcon: Icon(Icons.person),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // College Dropdown
                     DropdownButtonFormField<String>(
                       value: _selectedCollege,
-                      decoration: InputDecoration(
-                        labelText: 'College',
-                        hintText: 'Select your college',
-                        prefixIcon: const Icon(Icons.school_rounded),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      items: colleges.map((college) {
-                        return DropdownMenuItem(
-                          value: college,
-                          child: Text(college),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedCollege = value;
-                        });
-                      },
+                      hint: const Text('Select College'),
+                      items: colleges
+                          .map((c) =>
+                          DropdownMenuItem(value: c, child: Text(c)))
+                          .toList(),
+                      onChanged: (v) => setState(() => _selectedCollege = v),
                     ),
                     const SizedBox(height: 16),
-                    // UID
                     TextField(
                       controller: _uidController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Student UID',
-                        hintText: 'e.g., CU2023001',
-                        prefixIcon: const Icon(Icons.badge_rounded),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        prefixIcon: Icon(Icons.badge),
                       ),
                     ),
                     const SizedBox(height: 24),
-                    // Login Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: _isLoading ? null : _login,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF1F65B0),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
                         child: _isLoading
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : const Text(
-                                'Login',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
+                            ? const CircularProgressIndicator(
+                            color: Colors.white)
+                            : const Text('Login'),
                       ),
                     ),
                   ],
